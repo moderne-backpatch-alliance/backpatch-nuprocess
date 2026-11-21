@@ -1,0 +1,21 @@
+schema: osera-patch-evidence/0.1.0
+producer: moderne
+release: 1.2.6.1-backpatch-00001
+baseline: v1.2.6+backpatch.baseline
+fixes:
+  - cve: CVE-2022-39243
+    upstream_fix_url: https://github.com/advisories/GHSA-cxgf-v2p8-7ph7
+    advisory_url: https://nvd.nist.gov/vuln/detail/CVE-2022-39243
+    patch_commit_url: https://github.com/moderne-backpatch-alliance/backpatch-nuprocess/commit/0213fd5
+    basis: adapted
+    artifacts:
+      - com.zaxxer:nuprocess
+    note: New in this release; ported onto 1.2.6; fixed at 1.2.6.1-backpatch-00001 (backpatch-nuprocess@0213fd5).
+tests:
+  commit: 0213fd53f82a8b8d04218d8a5bbfe089d9b0ce6e
+  command: mvn -B -T1  -Dmaven.test.failure.ignore=true clean test
+  runtime: openjdk version 1.8.0_512 (Zulu 8.98.0.111, Linux aarch64, container azul/zulu-openjdk:8), Apache Maven 3.9.16
+  report: nuprocess-1.2.6.1-backpatch-00001-tests.zip
+  report_sha256: 273a7d760aa86adde1260038c03f37a33b9e28bb7c99abf48bcab0583f9c9be8
+  result: pass
+  note: "24 tests at the patch commit, 0 of them skipped by the suite, 0 failed, 0 errors. The suite of record ran in a Linux arm64 container (azul/zulu-openjdk:8): on this arm64 Mac the tag's JNA has no darwin-aarch64 library, so every process test fails to load it, with and without the fix (the avro-1.9 precedent)."
