@@ -253,6 +253,7 @@ public class NuProcessBuilder
     */
    public NuProcess start()
    {
+      ensureNoNullCharacters(command);
       if (processListener == null) {
          throw new IllegalArgumentException("NuProcessHandler not specified");
       }
@@ -264,5 +265,13 @@ public class NuProcessBuilder
       }
 
       return factory.createProcess(command, env, processListener, cwd);
+   }
+
+   private void ensureNoNullCharacters(List<String> commands) {
+      for (String command : commands) {
+         if (command.indexOf('\u0000') >= 0) {
+            throw new IllegalArgumentException("Commands may not contain null characters");
+         }
+      }
    }
 }
